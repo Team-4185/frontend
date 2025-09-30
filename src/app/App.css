@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 10rem;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  height: 50vh;
+  border: 2px solid;
+  border-color: #7516a1;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  background-color: #42004b;
+  color: rgb(199, 198, 198);
+}

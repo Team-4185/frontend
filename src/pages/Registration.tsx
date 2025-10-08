@@ -13,7 +13,6 @@ export const Registration = () => {
         disableGutters
         sx={{
           padding: '60px 0',
-          maxWidth: '1440px',
           height: 'max-content',
           display: 'flex',
           justifyContent: 'center',
@@ -23,7 +22,7 @@ export const Registration = () => {
         <Box
           component="div"
           sx={{
-            maxWidth: '100%',
+            maxWidth: '1440px',
             height: 'max-content',
             display: 'flex',
             background: 'rgba(151, 151, 151, 0.13)',
@@ -38,7 +37,7 @@ export const Registration = () => {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              maxWidth: '50%',
+              maxWidth: '627px',
               borderTopRightRadius: '50px',
               background: '#fff',
               alignItems: 'start',
@@ -75,8 +74,6 @@ export const Registration = () => {
               display: 'flex',
               flexDirection: 'column',
               maxWidth: '50%',
-              // alignItems: 'start',
-              // justifyContent: 'center',
               padding: '98px 45px',
             }}
           >

@@ -13,7 +13,6 @@ export const Login = () => {
         disableGutters
         sx={{
           padding: '60px 0',
-          maxWidth: '1440px',
           height: 'max-content',
           display: 'flex',
           justifyContent: 'center',
@@ -23,7 +22,7 @@ export const Login = () => {
         <Box
           component="div"
           sx={{
-            maxWidth: '100%',
+            maxWidth: '1440px',
             height: 'max-content',
             display: 'flex',
             background: 'rgba(151, 151, 151, 0.13)',
@@ -43,7 +42,7 @@ export const Login = () => {
               background: '#fff',
               alignItems: 'start',
               justifyContent: 'center',
-              padding: '289px 80px 30px 43px',
+              padding: '269px 80px 30px 80px',
             }}
           >
             <Box sx={{ maxWidth: '468px', display: 'flex', flexDirection: 'column', gap: '34px' }}>
@@ -62,7 +61,7 @@ export const Login = () => {
             <img
               src={ArrowRight}
               alt=""
-              style={{ maxWidth: '218px', maxHeight: '222px', alignSelf: 'end', marginTop: '47px' }}
+              style={{ maxWidth: '218px', maxHeight: '222px', alignSelf: 'end', marginTop: '37px' }}
             />
           </Box>
           {/* Левый */}
@@ -118,7 +117,7 @@ export const Login = () => {
                       },
                     },
                   }}
-                  id="emailAddress"
+                  id="emailAddressLogin"
                   label="Email Address"
                   variant="outlined"
                 />
@@ -153,7 +152,7 @@ export const Login = () => {
                     },
                   }}
                   type="password"
-                  id="password"
+                  id="passwordLogin"
                   label="Password"
                   variant="outlined"
                 />

@@ -35,7 +35,12 @@ export const Navigation: React.FC<NavigationProps> = ({ page, orderLength }) => 
         {!authPage && (
           <Box className="navigation-pages">
             {pages.map((p) => (
-              <Typography component="a" key={p} className="navigation-page">
+              <Typography
+                sx={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '600', fontSize: '18px' }}
+                component="a"
+                key={p}
+                className="navigation-page"
+              >
                 {p}
               </Typography>
             ))}

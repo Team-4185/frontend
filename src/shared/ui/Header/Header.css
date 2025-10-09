@@ -60,12 +60,8 @@
 }
 
 .navigation-page {
-    font-weight: 600;
-    font-size: 18px;
-    font-family: Montserrat, sans-serif;
     color: #000;
     cursor: pointer;
-    text-decoration: none;
 }
 
 .navigation-icons {

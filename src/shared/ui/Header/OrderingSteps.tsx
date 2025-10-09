@@ -53,7 +53,7 @@ export const OrderingSteps: React.FC<OrderingStepsProps> = ({ page }) => {
             }}
           >
             <span style={orderActivePage}>1</span>
-            <span>{page}</span>
+            <span style={{ fontWeight: '600', fontSize: '16px', color: '#000' }}>{page}</span>
             <span style={orderInactivePage}>2</span>
             <span style={orderInactivePage}>3</span>
           </Box>
@@ -76,7 +76,7 @@ export const OrderingSteps: React.FC<OrderingStepsProps> = ({ page }) => {
           >
             <img src={CheckMark} style={orderInactivePage} />
             <span style={orderActivePage}>2</span>
-            <span>{page}</span>
+            <span style={{ fontWeight: '600', fontSize: '16px', color: '#000' }}>{page}</span>
             <span style={orderInactivePage}>3</span>
           </Box>
         </Container>
@@ -99,7 +99,7 @@ export const OrderingSteps: React.FC<OrderingStepsProps> = ({ page }) => {
             <img src={CheckMark} style={orderInactivePage} />
             <img src={CheckMark} style={orderInactivePage} />
             <span style={orderActivePage}>3</span>
-            <span>{page}</span>
+            <span style={{ fontWeight: '600', fontSize: '16px', color: '#000' }}>{page}</span>
           </Box>
         </Container>
       ) : null}

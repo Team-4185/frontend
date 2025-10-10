@@ -6,6 +6,7 @@ import Cart from '/icons/cart.svg';
 import Logo from '/icons/Logo.png';
 import LogoText from '/icons/LogoText.svg';
 import type React from 'react';
+import './Header.css';
 
 type NavigationProps = {
   page?:
@@ -19,82 +20,52 @@ type NavigationProps = {
     | 'Payment';
   orderLength?: number;
 };
+
 export const Navigation: React.FC<NavigationProps> = ({ page, orderLength }) => {
   const icons = [Search, User, Liked, Cart];
   const pages = ['HOME', 'CATALOG', 'ABOUT US'];
   const authPage = page === 'Login' || page === 'Register';
   const authButtons = ['Login', 'Register'];
+
   return (
-    <Box
-      component="nav"
-      sx={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          gap: '5px',
-          width: '714px',
-          height: '44px',
-          alignItems: 'center',
-          justifyContent: 'start',
-        }}
-      >
+    <Box component="nav" className="navigation">
+      <Box className="navigation-left">
         <img src={Logo} alt="Logo" />
-        <img src={LogoText} alt="GagdetRoom" />
-        {!authPage ? (
-          <Box sx={{ display: 'flex', gap: '28px', ml: '93px' }}>
-            {pages.map((page) => (
+        <img src={LogoText} alt="GadgetRoom" />
+        {!authPage && (
+          <Box className="navigation-pages">
+            {pages.map((p) => (
               <Typography
-                key={page}
+                sx={{ fontFamily: 'Montserrat, sans-serif', fontWeight: '600', fontSize: '18px' }}
                 component="a"
-                sx={{
-                  fontWeight: '600',
-                  fontSize: '18px',
-                  fontFamily: 'Montserrat',
-                  color: '#000',
-                  cursor: 'pointer',
-                }}
+                key={p}
+                className="navigation-page"
               >
-                {page}
+                {p}
               </Typography>
             ))}
           </Box>
-        ) : null}
+        )}
       </Box>
+
       {!authPage ? (
-        <Box sx={{ display: 'flex', gap: '28px' }}>
+        <Box className="navigation-icons">
           {icons.map((icon) => (
-            <a href="#" key={icon}>
+            <a href="#" key={icon} className="navigation-icon">
               {icon === Cart ? (
                 <Badge badgeContent={orderLength} color="primary">
-                  <img src={icon} alt="icon" style={{ width: '29px', height: '29px' }} />
+                  <img src={icon} alt="icon" />
                 </Badge>
               ) : (
-                <img src={icon} alt="icon" style={{ width: '29px', height: '29px' }} />
+                <img src={icon} alt="icon" />
               )}
             </a>
           ))}
         </Box>
       ) : (
-        <Box sx={{ display: 'flex', gap: '28px' }}>
+        <Box className="navigation-auth">
           {authButtons.map((authButton) => (
-            <a
-              key={authButton}
-              href="#"
-              style={{
-                fontSize: '16px',
-                fontWeight: '600',
-                color: '#302f2f',
-                textTransform: 'uppercase',
-                borderRadius: authButton === page ? '39px' : 0,
-                padding: '8px',
-                background: authButton === page ? 'rgba(174, 165, 165, 0.37)' : 0,
-              }}
-            >
+            <a key={authButton} href="#" className={authButton === page ? 'active' : undefined}>
               {authButton}
             </a>
           ))}

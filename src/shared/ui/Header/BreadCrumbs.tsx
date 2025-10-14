@@ -4,15 +4,7 @@ import RightArrow from '/icons/SmallArrowRigth.svg';
 import './Header.css';
 
 type BreadCrumbsProps = {
-  page?:
-    | 'Home'
-    | 'Catalog'
-    | 'About us'
-    | 'Login'
-    | 'Register'
-    | 'Cart'
-    | 'Shipping details'
-    | 'Payment';
+  page?: 'Home' | 'Catalog' | 'About us' | 'Login' | 'Register' | 'Cart' | 'Delivery' | 'Payment';
   product?: string;
 };
 

@@ -29,18 +29,16 @@ export const Registration = () => {
             <Box className="registration__form-wrapper">
               <span className="registration__form-title">Register</span>
               <Box component="form" className="registration__form">
-                {['First Name', 'Last Name', 'Email Address', 'Password', 'Repeat Password'].map(
-                  (label, index) => (
-                    <TextField
-                      key={index}
-                      id={label.toLowerCase().replace(/\s+/g, '')}
-                      label={label}
-                      type={label.includes('Password') ? 'password' : 'text'}
-                      variant="outlined"
-                      className="registration__textfield"
-                    />
-                  )
-                )}
+                {['Email Address', 'Password', 'Repeat Password'].map((label, index) => (
+                  <TextField
+                    key={index}
+                    id={label.toLowerCase().replace(/\s+/g, '')}
+                    label={label}
+                    type={label.includes('Password') ? 'password' : 'text'}
+                    variant="outlined"
+                    className="registration__textfield"
+                  />
+                ))}
               </Box>
             </Box>
 

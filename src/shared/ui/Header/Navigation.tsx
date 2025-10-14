@@ -9,19 +9,12 @@ import type React from 'react';
 import './Header.css';
 
 type NavigationProps = {
-  page?:
-    | 'Home'
-    | 'Catalog'
-    | 'About us'
-    | 'Login'
-    | 'Register'
-    | 'Cart'
-    | 'Shipping details'
-    | 'Payment';
+  page?: 'Home' | 'Catalog' | 'About us' | 'Login' | 'Register' | 'Cart' | 'Delivery' | 'Payment';
   orderLength?: number;
+  handleLogin?: () => void;
 };
 
-export const Navigation: React.FC<NavigationProps> = ({ page, orderLength }) => {
+export const Navigation: React.FC<NavigationProps> = ({ page, orderLength, handleLogin }) => {
   const icons = [Search, User, Liked, Cart];
   const pages = ['HOME', 'CATALOG', 'ABOUT US'];
   const authPage = page === 'Login' || page === 'Register';
@@ -65,7 +58,12 @@ export const Navigation: React.FC<NavigationProps> = ({ page, orderLength }) => 
       ) : (
         <Box className="navigation-auth">
           {authButtons.map((authButton) => (
-            <a key={authButton} href="#" className={authButton === page ? 'active' : undefined}>
+            <a
+              key={authButton}
+              href="#"
+              className={authButton === page ? 'active' : undefined}
+              onClick={handleLogin}
+            >
               {authButton}
             </a>
           ))}

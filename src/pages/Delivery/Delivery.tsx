@@ -1,11 +1,4 @@
-import {
-  Container,
-  Box,
-  MenuItem,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-} from '@mui/material';
+import { Container, Box, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import { Footer } from '../../shared/ui/Footer/Footer';
 import { Header } from '../../widgets/Header/Header';
 import { OrderSummary } from '../../shared/ui/Cart/OrderSummary';
@@ -18,22 +11,22 @@ import { useState } from 'react';
 
 export const Delivery = () => {
   const [courierActive, setCourierActive] = useState(false);
-  const [novaPostaActive, setNovaPostActive] = useState(false);
-  const [ukrPostActive, setUrkPostaActive] = useState(false);
-  const [dhlActive, setDhlActive] = useState(false);
+  // const [novaPostaActive, setNovaPostActive] = useState(false);
+  // const [ukrPostActive, setUrkPostaActive] = useState(false);
+  // const [dhlActive, setDhlActive] = useState(false);
 
   const handleCourierActive = () => {
     setCourierActive((prev) => !prev);
   };
-  const handleNovaPostaActive = () => {
-    setNovaPostActive((prev) => !prev);
-  };
-  const handleUrkPostaActive = () => {
-    setUrkPostaActive((prev) => !prev);
-  };
-  const handleDhlActive = () => {
-    setDhlActive((prev) => !prev);
-  };
+  // const handleNovaPostaActive = () => {
+  //   setNovaPostActive((prev) => !prev);
+  // };
+  // const handleUrkPostaActive = () => {
+  //   setUrkPostaActive((prev) => !prev);
+  // };
+  // const handleDhlActive = () => {
+  //   setDhlActive((prev) => !prev);
+  // };
 
   return (
     <>

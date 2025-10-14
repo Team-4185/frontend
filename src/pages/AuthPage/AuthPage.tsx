@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Container, Box, TextField } from '@mui/material';
+import { Container, Box } from '@mui/material';
 import { Footer } from '../../shared/ui/Footer/Footer';
 import { Header } from '../../widgets/Header/Header';
 import { Input } from '../../shared/ui/Input/Input';

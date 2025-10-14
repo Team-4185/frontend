@@ -41,10 +41,7 @@ export const AuthPage = () => {
                 width: '50%',
                 height: '100%',
                 background: 'rgba(151, 151, 151, 0.13)',
-                borderTopLeftRadius: isLogin ? '0px' : '50px',
-                borderBottomLeftRadius: isLogin ? '0px' : '50px',
-                borderTopRightRadius: isLogin ? '50px' : '0px',
-                borderBottomRightRadius: isLogin ? '50px' : '0px',
+                borderRadius: '50px',
               }}
               animate={{
                 left: isLogin ? '0%' : '50%',

@@ -38,6 +38,20 @@
     margin-right: 19px;
 }
 
+.cart-product_delete {
+    position: relative;
+    display: flex;
+    gap: 1px;
+    cursor: pointer;
+    margin-top: 16px;
+}
+
+.cart-product_delete span {
+    font-weight: 500;
+    font-size: 15px;
+    color: #727070;
+}
+
 .cart-product-info {
     display: flex;
     flex-direction: column;

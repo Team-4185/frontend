@@ -4,6 +4,7 @@ import { Header } from '../../widgets/Header/Header';
 import { OrderSummary } from '../../shared/ui/Cart/OrderSummary';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import TrashIcon from '/icons/trash.svg';
 import './Cart.css';
 
 type CartProps = {
@@ -59,7 +60,13 @@ export const Cart: React.FC<CartProps> = ({ orderLength = 2 }) => {
                   {idx === 0 ? null : <Divider sx={{ mt: '22px', mb: '20px' }} />}
 
                   <Box className="cart-product">
-                    <img className="cart-product-img" src={product.img} alt={product.name} />
+                    <Box>
+                      <img className="cart-product-img" src={product.img} alt={product.name} />
+                      <Box className="cart-product_delete">
+                        <img src={TrashIcon} alt="trash"></img>
+                        <span>Delete</span>
+                      </Box>
+                    </Box>
                     <Box className="cart-product-info">
                       <span className="cart-product-name">{product.name}</span>
                       <span className="cart-product-color">{product.color}</span>

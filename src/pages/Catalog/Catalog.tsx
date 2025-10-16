@@ -197,7 +197,7 @@ export const Catalog = () => {
   return (
     <>
       <Header page="Catalog" product="" orderLength={0} />
-      <Container maxWidth="xl" disableGutters sx={{ padding: '95px 32px' }}>
+      <Container maxWidth="xl" disableGutters sx={{ padding: '61px 32px' }}>
         <Box
           sx={{
             display: 'flex',

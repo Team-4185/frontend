@@ -10,6 +10,7 @@
     align-items: center;
     gap: 16px;
     position: relative;
+    cursor: pointer;
 }
 
 .product-card__image {

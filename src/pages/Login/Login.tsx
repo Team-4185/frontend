@@ -1,5 +1,4 @@
 import { Container, Box, TextField } from '@mui/material';
-import { Footer } from '../../shared/ui/Footer/Footer';
 import { Header } from '../../widgets/Header/Header';
 import ArrowRight from '/icons/ArrowRight.svg';
 import './Login.css';
@@ -56,7 +55,6 @@ export const Login = () => {
         </Box>
       </Container>
 
-      <Footer />
     </>
   );
 };

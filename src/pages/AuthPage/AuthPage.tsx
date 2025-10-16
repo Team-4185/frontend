@@ -1,25 +1,30 @@
-import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Container, Box } from '@mui/material';
-import { Footer } from '../../shared/ui/Footer/Footer';
-import { Header } from '../../widgets/Header/Header';
 import { Input } from '../../shared/ui/Input/Input';
 import ArrowRight from '/icons/ArrowRight.svg';
 import ArrowLeft from '/icons/ArrowLeft.svg';
 import './AuthPage.css';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
 export const AuthPage = () => {
-  const [isLogin, setIsLogin] = useState(false);
-  const handleLogin = () => {
-    setIsLogin((prev) => !prev);
+  const location = useLocation();
+  const [mode, setMode] = useState<'login' | 'register'>('login');
+
+  useEffect(() => {
+    if (location.state?.mode) {
+      setMode(location.state.mode);
+    }
+  }, [location.state]);
+
+  const navigate = useNavigate();
+
+  const handleContinue = () => {
+    navigate('/home');
   };
+
   return (
     <>
-      <Header
-        page={isLogin ? 'Register' : 'Login'}
-        product=""
-        orderLength={0}
-        handleLogin={handleLogin}
-      />
       <Container maxWidth="xl" disableGutters sx={{ padding: '60px 0' }}>
         <Box sx={{ maxWidth: '1440px', margin: '0 auto', padding: '0 20px' }}>
           <Box
@@ -44,7 +49,7 @@ export const AuthPage = () => {
                 borderRadius: '50px',
               }}
               animate={{
-                left: isLogin ? '0%' : '50%',
+                left: mode !== 'login' ? '0%' : '50%',
               }}
               transition={{
                 duration: 0.8,
@@ -65,7 +70,7 @@ export const AuthPage = () => {
                 }}
               >
                 <AnimatePresence mode="wait">
-                  {isLogin ? (
+                  {mode != 'login' ? (
                     <motion.div
                       key="registerForm"
                       initial={{ opacity: 0, y: 20 }}
@@ -146,6 +151,7 @@ export const AuthPage = () => {
                               cursor: 'pointer',
                               borderRadius: '8px',
                             }}
+                            onClick={handleContinue}
                           >
                             Continue
                           </button>
@@ -208,7 +214,7 @@ export const AuthPage = () => {
                 }}
               >
                 <AnimatePresence mode="wait">
-                  {isLogin ? (
+                  {mode != 'login' ? (
                     <motion.div
                       key="niceText"
                       initial={{ opacity: 0, y: 20 }}
@@ -347,6 +353,7 @@ export const AuthPage = () => {
                               cursor: 'pointer',
                               borderRadius: '8px',
                             }}
+                            onClick={handleContinue}
                           >
                             Continue
                           </button>
@@ -360,7 +367,6 @@ export const AuthPage = () => {
           </Box>
         </Box>
       </Container>
-      <Footer />
     </>
   );
 };

@@ -22,8 +22,8 @@ const App = () => {
   };
 
   const page = pageMap[currentPath]; // undefined for other pages
-
   return (
+
     <div className="app-container">
       <Header page={page} orderLength={page?2:0}/>
       <main className="content">
@@ -42,5 +42,4 @@ const App = () => {
     </div>
   );
 };
-
 export default App;

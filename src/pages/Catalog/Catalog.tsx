@@ -1,6 +1,4 @@
 import { useState, useMemo } from 'react';
-import { Header } from '../../widgets/Header/Header';
-import { Footer } from '../../shared/ui/Footer/Footer';
 import {
   Accordion,
   AccordionDetails,
@@ -196,7 +194,6 @@ export const Catalog = () => {
 
   return (
     <>
-      <Header page="Catalog" product="" orderLength={0} />
       <Container maxWidth="xl" disableGutters sx={{ padding: '61px 32px' }}>
         <Box
           sx={{
@@ -781,7 +778,6 @@ export const Catalog = () => {
           </Box>
         </Box>
       </Container>
-      <Footer />
     </>
   );
 };

@@ -6,8 +6,6 @@ import {
   Container,
   MenuItem,
 } from '@mui/material';
-import { Footer } from '../../shared/ui/Footer/Footer';
-import { Header } from '../../widgets/Header/Header';
 import { OrderSummary } from '../../shared/ui/Cart/OrderSummary';
 import { Input } from '../../shared/ui/Input/Input';
 import Rectangle from '/icons/greyRectangle.svg';
@@ -43,7 +41,6 @@ export const Payment = () => {
 
   return (
     <>
-      <Header page="Payment" product="" orderLength={2} />
       <Container disableGutters maxWidth="xl" className="payment-container">
         <Box className="payment-wrapper">
           <Box className="payment-form">
@@ -140,7 +137,6 @@ export const Payment = () => {
           <OrderSummary />
         </Box>
       </Container>
-      <Footer />
     </>
   );
 };

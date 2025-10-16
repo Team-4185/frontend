@@ -44,13 +44,16 @@
     align-items: center;
 }
 
+.navigation-logo {
+    display: flex;
+}
+
 .navigation-left {
     display: flex;
     gap: 5px;
-    width: 714px;
     height: 44px;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
 }
 
 .navigation-pages {
@@ -74,9 +77,10 @@
     height: 29px;
 }
 
-.navigation-auth a {
+.navigation-auth a, .navigation-pages a {
     font-size: 16px;
     font-weight: 600;
+    height: 39px;
     color: #302f2f;
     text-transform: uppercase;
     padding: 8px;
@@ -84,9 +88,10 @@
     border-radius: 0;
     background: none;
     transition: 0.3s;
+    cursor: pointer;
 }
 
-.navigation-auth a.active {
+.navigation-auth a.clicked, .navigation-pages a.active {
     border-radius: 39px;
     background: rgba(174, 165, 165, 0.37);
 }

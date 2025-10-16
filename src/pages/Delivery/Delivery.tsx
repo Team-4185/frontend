@@ -1,6 +1,4 @@
 import { Container, Box, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
-import { Footer } from '../../shared/ui/Footer/Footer';
-import { Header } from '../../widgets/Header/Header';
 import { OrderSummary } from '../../shared/ui/Cart/OrderSummary';
 import { Input } from '../../shared/ui/Input/Input';
 import RadioActive from '/icons/RadioActive.svg';
@@ -30,7 +28,6 @@ export const Delivery = () => {
 
   return (
     <>
-      <Header page="Delivery" product="" orderLength={2} />
       <Container disableGutters maxWidth="xl" className="shipping-container">
         <Box className="shipping-wrapper">
           <Box
@@ -83,7 +80,6 @@ export const Delivery = () => {
           <OrderSummary />
         </Box>
       </Container>
-      <Footer />
     </>
   );
 };

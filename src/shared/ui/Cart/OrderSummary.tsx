@@ -10,8 +10,14 @@ import Lock from '/icons/lock.svg';
 import Voucher from '/icons/voucher.svg';
 import ExpandMoreIcon from '/icons/ExpandMore.svg';
 import '../../../pages/Cart/Cart.css';
+import { useNavigate } from 'react-router-dom';
 
 export const OrderSummary = () => {
+  const navigate = useNavigate();
+
+  const handleContinue = () => {
+    navigate('/payment');
+  };
   return (
     <>
       <Box className="cart-right">
@@ -40,7 +46,7 @@ export const OrderSummary = () => {
           <div className="cart-total-value">€ 888.50</div>
         </Box>
 
-        <button className="cart-btn-payment">
+        <button className="cart-btn-payment" onClick={handleContinue}>
           <img src={Lock} alt="Lock" /> continue to payment
         </button>
 

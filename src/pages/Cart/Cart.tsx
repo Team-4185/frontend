@@ -1,6 +1,4 @@
 import { Container, Box, Grid, Divider } from '@mui/material';
-import { Footer } from '../../shared/ui/Footer/Footer';
-import { Header } from '../../widgets/Header/Header';
 import { OrderSummary } from '../../shared/ui/Cart/OrderSummary';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
@@ -33,7 +31,6 @@ export const Cart: React.FC<CartProps> = ({ orderLength = 2 }) => {
 
   return (
     <>
-      <Header page="Cart" orderLength={2} product="" />
       <Container disableGutters maxWidth="xl" className="cart-container">
         <Box className="cart-content">
           {/* Левая часть */}
@@ -95,7 +92,6 @@ export const Cart: React.FC<CartProps> = ({ orderLength = 2 }) => {
           <OrderSummary />
         </Box>
       </Container>
-      <Footer />
     </>
   );
 };

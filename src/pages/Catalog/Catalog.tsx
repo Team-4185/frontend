@@ -54,7 +54,7 @@ export const Catalog = () => {
   const [pocoActive, setPocoActive] = useState<boolean>(false);
   const [inStockActive, setInStockActive] = useState<boolean>(false);
   const [preOrderActive, setPreOrderActive] = useState<boolean>(false);
-  const [sliderValue, setSliderValue] = useState<number>(2999);
+  const [sliderValue, setSliderValue] = useState<number>(2000);
 
   // Filter and sort products
   const filteredAndSortedProducts = useMemo<Product[]>(() => {
@@ -495,7 +495,7 @@ export const Catalog = () => {
                         color: '#000',
                       }}
                     >
-                      <span>€ 299</span>
+                      <span>€ {sliderValue}</span>
                       <span>€ 2000</span>
                     </Box>
                     <Slider

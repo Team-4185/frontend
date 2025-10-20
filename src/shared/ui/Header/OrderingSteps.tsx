@@ -3,7 +3,16 @@ import CheckMark from '/icons/checkMark.svg';
 import './Header.css';
 
 type OrderingStepsProps = {
-  page?: 'Home' | 'Catalog' | 'About us' | 'Login' | 'Register' | 'Cart' | 'Delivery' | 'Payment';
+  page?:
+    | 'Home'
+    | 'Catalog'
+    | 'About us'
+    | 'Login'
+    | 'Register'
+    | 'Cart'
+    | 'Delivery'
+    | 'Payment'
+    | 'ProductPage';
 };
 
 export const OrderingSteps: React.FC<OrderingStepsProps> = ({ page }) => {

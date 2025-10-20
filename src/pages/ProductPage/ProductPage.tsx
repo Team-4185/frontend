@@ -24,6 +24,7 @@ export const ProductPage: React.FC = () => {
   const productFromState = location.state;
   const product = productFromState || products.find((p) => p.id === Number(id));
   const [img, setImg] = useState(First);
+  const cpuName = product.name.split(' ');
 
   return (
     <Container disableGutters maxWidth="xl" sx={{ padding: '20px' }}>
@@ -157,7 +158,7 @@ export const ProductPage: React.FC = () => {
                     color: '#4e4e4e',
                   }}
                 >
-                  Apple A16
+                  {cpuName[0]}
                 </span>
               </Box>
             </Box>

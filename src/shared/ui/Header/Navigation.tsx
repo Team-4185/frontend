@@ -10,7 +10,16 @@ import UserIcon from '/icons/user.svg';
 import LikedIcon from '/icons/liked.svg';
 
 type NavigationProps = {
-  page?: 'Home' | 'Catalog' | 'About us' | 'Login' | 'Register' | 'Cart' | 'Delivery' | 'Payment';
+  page?:
+    | 'Home'
+    | 'Catalog'
+    | 'About us'
+    | 'Login'
+    | 'Register'
+    | 'Cart'
+    | 'Delivery'
+    | 'Payment'
+    | 'ProductPage';
   orderLength?: number;
   handleLogin?: () => void;
 };
@@ -24,6 +33,7 @@ export const PageName = {
   Payment: 'Payment',
   Login: 'Login',
   Register: 'Register',
+  ProductPage: 'ProductPage',
 } as const;
 
 export const Navigation: React.FC<NavigationProps> = ({ page, orderLength, handleLogin }) => {
@@ -107,7 +117,8 @@ export const Navigation: React.FC<NavigationProps> = ({ page, orderLength, handl
           {authButtons.map((authButton) => {
             // fallback to 'login' if location.state?.mode is undefined
             const currentMode = location.state?.mode || 'login';
-            const isActive = location.pathname === '/auth' && currentMode === authButton.name.toLowerCase();
+            const isActive =
+              location.pathname === '/auth' && currentMode === authButton.name.toLowerCase();
 
             return (
               <NavLink

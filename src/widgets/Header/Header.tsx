@@ -4,7 +4,16 @@ import { Navigation } from '../../shared/ui/Header/Navigation';
 import { BreadCrumbs } from '../../shared/ui/Header/BreadCrumbs';
 
 type HeaderProps = {
-  page?: 'Home' | 'Catalog' | 'About us' | 'Login' | 'Register' | 'Cart' | 'Delivery' | 'Payment';
+  page?:
+    | 'Home'
+    | 'Catalog'
+    | 'About us'
+    | 'Login'
+    | 'Register'
+    | 'Cart'
+    | 'Delivery'
+    | 'Payment'
+    | 'ProductPage';
   orderLength?: number;
   product?: string;
   handleLogin?: () => void;

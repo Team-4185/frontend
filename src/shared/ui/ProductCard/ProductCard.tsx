@@ -12,6 +12,7 @@ type ProductCardProps = {
   sale: number | boolean | undefined;
   hit: boolean | undefined;
   newProduct: boolean | undefined;
+  onClick?: () => void;
 };
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -21,9 +22,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   sale,
   hit,
   newProduct,
+  onClick,
 }) => {
   return (
-    <Box className="product-card">
+    <Box className="product-card" onClick={onClick}>
       {sale || hit || newProduct ? (
         <span
           style={{

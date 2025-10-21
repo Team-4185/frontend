@@ -6,10 +6,31 @@ import ArrowLeft from '/icons/ArrowLeft.svg';
 import './AuthPage.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import api from '../../api/api.tsx';
+
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const REGISTER_URL = '/api/auth/register';
 
 export const AuthPage = () => {
   const location = useLocation();
   const [mode, setMode] = useState<'login' | 'register'>('login');
+
+  const [email, setEmail] = useState('');
+  const [validEmail, setValidEmail] = useState(false);
+  const [emailFocus, setEmailFocus] = useState(false);
+
+  const [pwd, setPwd] = useState('');
+  const [validPwd, setValidPwd] = useState(false);
+  const [pwdFocus, setPwdFocus] = useState(false);
+
+  const [matchPwd, setMatchPwd] = useState('');
+  const [validMatch, setValidMatch] = useState(false);
+  const [matchFocus, setMatchFocus] = useState(false);
+
+  const [errMsg, setErrMsg] = useState('');
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     if (location.state?.mode) {
@@ -22,6 +43,48 @@ export const AuthPage = () => {
   const handleContinue = () => {
     navigate('/home');
   };
+
+  const handleLoginSubmit=(e:any)=>{
+    e.preventDefault();
+    console.log(e);
+  };
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+    // if button enabled with JS hack
+    const v1 = EMAIL_REGEX.test(email);
+    const v2 = PWD_REGEX.test(pwd);
+    if (!v1 || !v2) {
+      setErrMsg("Invalid Entry");
+      return;
+    }
+    try {
+      const response = await api.post(
+        '/auth/register',
+        { email:email, password: pwd, passwordConfirmation: matchPwd },
+        {
+          headers: { 'Content-Type': 'application/json',
+          'Accept': 'application/json'},
+        }
+      );
+      console.log(response);
+      console.log(JSON.stringify(response))
+      // setSuccess(true);
+      //clear state and controlled inputs
+      //need value attrib on inputs for this
+      setEmail('');
+      setPwd('');
+      setMatchPwd('');
+    } catch (err) {
+      // if (!err?.response) {
+      //   setErrMsg('No Server Response');
+      // } else if (err.response?.status === 409) {
+      //   setErrMsg('Username Taken');
+      // } else {
+      //   setErrMsg('Registration Failed')
+      // }
+      // errRef.current.focus();
+    }
+  }
 
   return (
     <>
@@ -58,51 +121,53 @@ export const AuthPage = () => {
             />
 
             {/* Левая половина с контентом */}
-            <Box sx={{ position: 'relative', width: '50%', zIndex: 1 }}>
-              <Box
-                sx={{
-                  width: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '60px 40px',
-                  minHeight: '800px',
-                }}
-              >
-                <AnimatePresence mode="wait">
-                  {mode != 'login' ? (
-                    <motion.div
-                      key="registerForm"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.4 }}
-                      style={{ width: '100%', maxWidth: '480px' }}
-                    >
-                      <Box
-                        sx={{
-                          width: '100%',
-                          display: 'flex',
-                          flexDirection: 'column',
-                        }}
+            <form onSubmit={handleRegisterSubmit}>
+              <Box sx={{ position: 'relative', width: '50%', zIndex: 1 }}>
+                <Box
+                  sx={{
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '60px 40px',
+                    minHeight: '800px',
+                  }}
+                >
+                  <AnimatePresence mode="wait">
+                    {mode != 'login' ? (
+                      <motion.div
+                        key="registerForm"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.4 }}
+                        style={{ width: '100%', maxWidth: '480px' }}
                       >
-                        <span
-                          style={{
-                            fontWeight: '600',
-                            fontSize: '36px',
-                            color: '#000',
-                            marginBottom: '35px',
+                        <Box
+                          sx={{
+                            width: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
                           }}
                         >
-                          Register
-                        </span>
+                          <span
+                            style={{
+                              fontWeight: '600',
+                              fontSize: '36px',
+                              color: '#000',
+                              marginBottom: '35px',
+                            }}
+                          >
+                            Register
+                          </span>
 
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                          {['Email Address', 'Password', 'Repeat Password'].map((label, index) => (
+                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                             <Input
-                              key={index}
-                              type={label.includes('Password') ? 'password' : 'text'}
-                              label={label}
+                              type="text"
+                              label="Email Address"
+                              id="email"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
                               sx={{
                                 width: '100%',
                                 borderRadius: '8px',
@@ -112,258 +177,289 @@ export const AuthPage = () => {
                                 boxSizing: 'border-box',
                               }}
                             />
-                          ))}
-                        </Box>
 
-                        <Box
-                          sx={{
-                            marginTop: '30px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '20px',
-                          }}
-                        >
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <input
-                              type="checkbox"
-                              name="terms"
-                              id="terms"
-                              style={{ width: '18px', height: '18px', accentColor: 'black' }}
+                            <Input
+                              type="password"
+                              label="Password"
+                              id="pwd"
+                              value={pwd}
+                              onChange={(e) => setPwd(e.target.value)}
+                              sx={{
+                                width: '100%',
+                                borderRadius: '8px',
+                                background: 'rgba(255, 255, 255, 0.7)',
+                                border: '1px solid #ccc',
+                                fontSize: '16px',
+                                boxSizing: 'border-box',
+                              }}
                             />
-                            <Box style={{ fontSize: '16px', color: 'rgba(0, 0, 0, 0.65)' }}>
-                              <Box>I have read and accept the Terms of</Box>
-                              <Box>Service & Privacy Policy *</Box>
-                            </Box>
+
+                            <Input
+                              type="password"
+                              label="Repeat Password"
+                              id="confirm_pwd"
+                              value={matchPwd}
+                              onChange={(e) => setMatchPwd(e.target.value)}
+                              sx={{
+                                width: '100%',
+                                borderRadius: '8px',
+                                background: 'rgba(255, 255, 255, 0.7)',
+                                border: '1px solid #ccc',
+                                fontSize: '16px',
+                                boxSizing: 'border-box',
+                              }}
+                            />
                           </Box>
-                          <button
-                            style={{
-                              fontFamily: 'Montserrat, sans-serif',
-                              width: '100%',
-                              marginTop: '32px',
-                              height: '36px',
-                              background: '#fff',
-                              fontWeight: '600',
-                              fontSize: '16px',
-                              textTransform: 'uppercase',
-                              textAlign: 'center',
-                              color: '#000',
-                              border: 'none',
-                              cursor: 'pointer',
-                              borderRadius: '8px',
-                            }}
-                            onClick={handleContinue}
-                          >
-                            Continue
-                          </button>
-                        </Box>
-                      </Box>
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="welcomeText"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.4 }}
-                      style={{ width: '100%', padding: '0 80px' }}
-                    >
-                      <Box sx={{ maxWidth: '480px' }}>
-                        <span
-                          style={{
-                            fontWeight: '700',
-                            fontSize: '56px',
-                            color: '#000',
-                            display: 'block',
-                            marginBottom: '20px',
-                          }}
-                        >
-                          Welcome back
-                        </span>
-                        <span
-                          style={{
-                            fontWeight: '500',
-                            fontSize: '24px',
-                            color: '#000',
-                            display: 'block',
-                            marginBottom: '30px',
-                          }}
-                        >
-                          Please login to continue
-                        </span>
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                          <img src={ArrowRight} alt="" />
-                        </Box>
-                      </Box>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </Box>
-            </Box>
 
-            {/* Правая половина с контентом */}
-            <Box sx={{ position: 'relative', width: '50%', zIndex: 1 }}>
-              <Box
-                sx={{
-                  width: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '60px 40px',
-                  boxSizing: 'border-box',
-                  minHeight: '800px',
-                }}
-              >
-                <AnimatePresence mode="wait">
-                  {mode != 'login' ? (
-                    <motion.div
-                      key="niceText"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.4 }}
-                      style={{ width: '100%', padding: '0 80px' }}
-                    >
-                      <Box sx={{ maxWidth: '480px' }}>
-                        <span
-                          style={{
-                            fontWeight: '700',
-                            fontSize: '56px',
-                            color: '#000',
-                            display: 'block',
-                            marginBottom: '20px',
-                          }}
-                        >
-                          Nice to meet you)
-                        </span>
-                        <span
-                          style={{
-                            fontWeight: '500',
-                            fontSize: '24px',
-                            color: '#000',
-                            display: 'block',
-                            marginBottom: '30px',
-                          }}
-                        >
-                          Just register to join with us
-                        </span>
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-                          <img src={ArrowLeft} alt="" />
-                        </Box>
-                      </Box>
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="loginForm"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.4 }}
-                      style={{ width: '100%', maxWidth: '480px' }}
-                    >
-                      <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
-                        <span
-                          style={{
-                            fontWeight: '600',
-                            fontSize: '36px',
-                            color: '#000',
-                            marginBottom: '35px',
-                          }}
-                        >
-                          Login
-                        </span>
-
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                          <Input
-                            type="email"
-                            label="Email Address"
-                            sx={{
-                              width: '100%',
-                              borderRadius: '8px',
-                              background: 'rgba(255, 255, 255, 0.7)',
-                              border: '1px solid #ccc',
-                              fontSize: '16px',
-                            }}
-                          />
-                          <Input
-                            type="password"
-                            label="Password"
-                            sx={{
-                              width: '100%',
-                              borderRadius: '8px',
-                              background: 'rgba(255, 255, 255, 0.7)',
-                              border: '1px solid #ccc',
-                              fontSize: '16px',
-                            }}
-                          />
-                        </Box>
-
-                        <Box
-                          sx={{
-                            marginTop: '25px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '15px',
-                          }}
-                        >
                           <Box
                             sx={{
+                              marginTop: '30px',
                               display: 'flex',
-                              justifyContent: 'space-between',
-                              alignItems: 'center',
+                              flexDirection: 'column',
+                              gap: '20px',
                             }}
                           >
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                               <input
-                                style={{
-                                  width: '18px',
-                                  height: '18px',
-                                  accentColor: ' black',
-                                  backgroundColor: 'white',
-                                }}
                                 type="checkbox"
-                                id="remember"
+                                name="terms"
+                                id="terms"
+                                style={{ width: '18px', height: '18px', accentColor: 'black' }}
                               />
-                              <span>Remember</span>
+                              <Box style={{ fontSize: '16px', color: 'rgba(0, 0, 0, 0.65)' }}>
+                                <Box>I have read and accept the Terms of</Box>
+                                <Box>Service & Privacy Policy *</Box>
+                              </Box>
                             </Box>
                             <button
                               style={{
-                                background: 'none',
+                                fontFamily: 'Montserrat, sans-serif',
+                                width: '100%',
+                                marginTop: '32px',
+                                height: '36px',
+                                background: '#fff',
+                                fontWeight: '600',
+                                fontSize: '16px',
+                                textTransform: 'uppercase',
+                                textAlign: 'center',
+                                color: '#000',
                                 border: 'none',
-                                color: '#777',
                                 cursor: 'pointer',
-                                fontSize: '15px',
+                                borderRadius: '8px',
                               }}
                             >
-                              Forgot Password?
+                              Continue
                             </button>
                           </Box>
-                          <button
-                            style={{
-                              fontFamily: 'Montserrat, sans-serif',
-                              width: '100%',
-                              marginTop: '32px',
-                              height: '36px',
-                              background: '#fff',
-                              fontWeight: '600',
-                              fontSize: '16px',
-                              textTransform: 'uppercase',
-                              textAlign: 'center',
-                              color: '#000',
-                              border: 'none',
-                              cursor: 'pointer',
-                              borderRadius: '8px',
-                            }}
-                            onClick={handleContinue}
-                          >
-                            Continue
-                          </button>
                         </Box>
-                      </Box>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="welcomeText"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.4 }}
+                        style={{ width: '100%', padding: '0 80px' }}
+                      >
+                        <Box sx={{ maxWidth: '480px' }}>
+                          <span
+                            style={{
+                              fontWeight: '700',
+                              fontSize: '56px',
+                              color: '#000',
+                              display: 'block',
+                              marginBottom: '20px',
+                            }}
+                          >
+                            Welcome back
+                          </span>
+                          <span
+                            style={{
+                              fontWeight: '500',
+                              fontSize: '24px',
+                              color: '#000',
+                              display: 'block',
+                              marginBottom: '30px',
+                            }}
+                          >
+                            Please login to continue
+                          </span>
+                          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            <img src={ArrowRight} alt="" />
+                          </Box>
+                        </Box>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </Box>
               </Box>
-            </Box>
+            </form>
+            {/* Правая половина с контентом */}
+            <form onSubmit={handleLoginSubmit}>
+              <Box sx={{ position: 'relative', width: '50%', zIndex: 1 }}>
+                <Box
+                  sx={{
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '60px 40px',
+                    boxSizing: 'border-box',
+                    minHeight: '800px',
+                  }}
+                >
+                  <AnimatePresence mode="wait">
+                    {mode != 'login' ? (
+                      <motion.div
+                        key="niceText"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.4 }}
+                        style={{ width: '100%', padding: '0 80px' }}
+                      >
+                        <Box sx={{ maxWidth: '480px' }}>
+                          <span
+                            style={{
+                              fontWeight: '700',
+                              fontSize: '56px',
+                              color: '#000',
+                              display: 'block',
+                              marginBottom: '20px',
+                            }}
+                          >
+                            Nice to meet you)
+                          </span>
+                          <span
+                            style={{
+                              fontWeight: '500',
+                              fontSize: '24px',
+                              color: '#000',
+                              display: 'block',
+                              marginBottom: '30px',
+                            }}
+                          >
+                            Just register to join with us
+                          </span>
+                          <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+                            <img src={ArrowLeft} alt="" />
+                          </Box>
+                        </Box>
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="loginForm"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.4 }}
+                        style={{ width: '100%', maxWidth: '480px' }}
+                      >
+                        <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+                          <span
+                            style={{
+                              fontWeight: '600',
+                              fontSize: '36px',
+                              color: '#000',
+                              marginBottom: '35px',
+                            }}
+                          >
+                            Login
+                          </span>
+
+                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                            <Input
+                              type="email"
+                              label="Email Address"
+                              sx={{
+                                width: '100%',
+                                borderRadius: '8px',
+                                background: 'rgba(255, 255, 255, 0.7)',
+                                border: '1px solid #ccc',
+                                fontSize: '16px',
+                              }}
+                            />
+                            <Input
+                              type="password"
+                              label="Password"
+                              sx={{
+                                width: '100%',
+                                borderRadius: '8px',
+                                background: 'rgba(255, 255, 255, 0.7)',
+                                border: '1px solid #ccc',
+                                fontSize: '16px',
+                              }}
+                            />
+                          </Box>
+
+                          <Box
+                            sx={{
+                              marginTop: '25px',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              gap: '15px',
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                              }}
+                            >
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <input
+                                  style={{
+                                    width: '18px',
+                                    height: '18px',
+                                    accentColor: ' black',
+                                    backgroundColor: 'white',
+                                  }}
+                                  type="checkbox"
+                                  id="remember"
+                                />
+                                <span>Remember</span>
+                              </Box>
+                              <button
+                                style={{
+                                  background: 'none',
+                                  border: 'none',
+                                  color: '#777',
+                                  cursor: 'pointer',
+                                  fontSize: '15px',
+                                }}
+                              >
+                                Forgot Password?
+                              </button>
+                            </Box>
+                            <button
+                              style={{
+                                fontFamily: 'Montserrat, sans-serif',
+                                width: '100%',
+                                marginTop: '32px',
+                                height: '36px',
+                                background: '#fff',
+                                fontWeight: '600',
+                                fontSize: '16px',
+                                textTransform: 'uppercase',
+                                textAlign: 'center',
+                                color: '#000',
+                                border: 'none',
+                                cursor: 'pointer',
+                                borderRadius: '8px',
+                              }}
+                            >
+                              Continue
+                            </button>
+                          </Box>
+                        </Box>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </Box>
+              </Box>
+            </form>
           </Box>
         </Box>
       </Container>

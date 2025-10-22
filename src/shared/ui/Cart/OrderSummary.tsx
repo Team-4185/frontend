@@ -11,10 +11,19 @@ import Voucher from '/icons/voucher.svg';
 import ExpandMoreIcon from '/icons/ExpandMore.svg';
 import '../../../pages/Cart/Cart.css';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../../app/store';
 
 export const OrderSummary = () => {
-  const navigate = useNavigate();
+  const amountOfProducts = useSelector((state: RootState) => state.cart.cart.length);
+  const tax = 13;
+  const shipping = 13;
+  const subTotal = useSelector((state: RootState) =>
+    state.cart.cart.reduce((sum, product) => sum + product.price * product.amount, 0)
+  );
+  const total = tax + shipping + subTotal;
 
+  const navigate = useNavigate();
   const handleContinue = () => {
     navigate('/payment');
   };
@@ -27,15 +36,15 @@ export const OrderSummary = () => {
         <Box sx={{ display: 'flex', gap: '20px', flexDirection: 'column' }}>
           <Box className="cart-summary-row">
             <div className="cart-summary-label">Subtotal</div>
-            <div className="cart-summary-value">€ 875.50</div>
+            <div className="cart-summary-value">€ {amountOfProducts ? subTotal.toFixed(2) : 0}</div>
           </Box>
           <Box className="cart-summary-row">
             <div className="cart-summary-label">Tax</div>
-            <div className="cart-summary-value">€ 00.00</div>
+            <div className="cart-summary-value">€ {amountOfProducts ? tax.toFixed(2) : 0}</div>
           </Box>
           <Box className="cart-summary-row">
             <div className="cart-summary-label">Shipping</div>
-            <div className="cart-summary-value">€ 13.00</div>
+            <div className="cart-summary-value">€ {amountOfProducts ? shipping.toFixed(2) : 0}</div>
           </Box>
         </Box>
 
@@ -43,7 +52,7 @@ export const OrderSummary = () => {
 
         <Box className="cart-total">
           <div className="cart-total-label">Total</div>
-          <div className="cart-total-value">€ 888.50</div>
+          <div className="cart-total-value">€ {amountOfProducts ? total : 0}</div>
         </Box>
 
         <button className="cart-btn-payment" onClick={handleContinue}>

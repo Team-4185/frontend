@@ -290,6 +290,7 @@ export const Catalog = () => {
             {currentItems.map((product) => (
               <ProductCard
                 key={product.id}
+                id={product.id}
                 image={product.img}
                 name={product.name}
                 price={product.price}

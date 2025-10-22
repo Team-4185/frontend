@@ -4,8 +4,11 @@ import Currency from '/icons/currency.svg';
 import WhishlistIcon from '/icons/WhishlistIcon.svg';
 import Cart from '/icons/AddToCart.svg';
 import './ProductCard.css';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../../../app/store/CartSlice.ts';
 
 type ProductCardProps = {
+  id: number;
   image: string;
   name: string;
   price: number;
@@ -13,9 +16,11 @@ type ProductCardProps = {
   hit: boolean | undefined;
   newProduct: boolean | undefined;
   onClick?: () => void;
+  
 };
 
 export const ProductCard: React.FC<ProductCardProps> = ({
+  id,
   image,
   name,
   price,
@@ -24,6 +29,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   newProduct,
   onClick,
 }) => {
+  const dispatch = useDispatch();
+  const addToCart = () => dispatch(addProduct({ id, name, price, amount:1, }));
   return (
     <Box className="product-card" onClick={onClick}>
       {sale || hit || newProduct ? (
@@ -52,7 +59,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <span>{price}</span>
         </Box>
         <Box className="product-card__actions">
-          <Box className="product-card__add-to-cart">
+          <Box
+            onClick={(e) => {
+              e.stopPropagation();
+              addToCart();
+            }}
+            className="product-card__add-to-cart"
+          >
             <span className="product-card__add-to-cart-text">Add to Cart</span>
             <img src={Cart} alt="Cart icon" />
           </Box>

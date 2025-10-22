@@ -10,12 +10,13 @@ import { Payment } from '../pages/Payment/Payment.tsx';
 import { Cart } from '../pages/Cart/Cart.tsx';
 import { Header } from '../widgets/Header/Header.tsx';
 import { ProductPage } from '../pages/ProductPage/ProductPage.tsx';
+import { useSelector } from 'react-redux';
+import type { RootState } from './store/index.ts';
 
 const App = () => {
   const location = useLocation();
   const currentPath = location.pathname;
   const productName = location.state?.name;
-  console.log(location);
 
   const pageMap: Record<string, any> = {
     '/cart': 'Cart',
@@ -27,9 +28,10 @@ const App = () => {
   };
 
   const page = pageMap[currentPath]; // undefined for other pages
+  const cartLength = useSelector((state: RootState) => state.cart.cart.length);
   return (
     <div className="app-container">
-      <Header page={page} orderLength={page ? 2 : 0} product={productName} />
+      <Header page={page} orderLength={cartLength} product={productName} />
       <main className="content">
         <Routes>
           <Route path="/" element={<Home />} />

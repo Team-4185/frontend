@@ -4,30 +4,16 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import TrashIcon from '/icons/trash.svg';
 import './Cart.css';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../../app/store';
+import greyBox from '/icons/greyBox.png';
+1;
+import { decreaseAmount, increaseAmount, removeProduct } from '../../app/store/CartSlice';
 
-type CartProps = {
-  orderLength?: number;
-};
-
-export const Cart: React.FC<CartProps> = ({ orderLength = 2 }) => {
-  const products = [
-    {
-      id: 1,
-      img: '/icons/greyBox.png',
-      name: 'iPhone 15 Pro MAX 256 GB',
-      color: 'Color: Black',
-      amount: 1,
-      price: '850',
-    },
-    {
-      id: 2,
-      img: '/icons/greyBox.png',
-      name: 'Silicon Case for iPhone 15 Pro MAX',
-      color: 'Color: Storm Blue',
-      amount: 1,
-      price: '25.50',
-    },
-  ];
+export const Cart: React.FC = () => {
+  const products = useSelector((state: RootState) => state.cart.cart);
+  const cartLength = useSelector((state: RootState) => state.cart.cart.length);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -35,7 +21,7 @@ export const Cart: React.FC<CartProps> = ({ orderLength = 2 }) => {
         <Box className="cart-content">
           {/* Левая часть */}
           <Box className="cart-left">
-            <div className="cart-title">Cart {orderLength ? `(${orderLength})` : null}</div>
+            <div className="cart-title">Cart {cartLength ? `(${cartLength})` : null}</div>
 
             <Box sx={{ width: '100%' }}>
               <Grid container spacing={0} sx={{ width: '100%' }}>
@@ -58,23 +44,32 @@ export const Cart: React.FC<CartProps> = ({ orderLength = 2 }) => {
 
                   <Box className="cart-product">
                     <Box>
-                      <img className="cart-product-img" src={product.img} alt={product.name} />
-                      <Box className="cart-product_delete">
-                        <img src={TrashIcon} alt="trash"></img>
+                      <img className="cart-product-img" src={greyBox} alt={product.name} />
+                      <Box
+                        onClick={() => dispatch(removeProduct(product.id))}
+                        className="cart-product_delete"
+                      >
+                        <img src={TrashIcon} alt="trash" />
                         <span>Delete</span>
                       </Box>
                     </Box>
                     <Box className="cart-product-info">
                       <span className="cart-product-name">{product.name}</span>
-                      <span className="cart-product-color">{product.color}</span>
+                      <span className="cart-product-color">Black</span>
                     </Box>
 
                     <Box className="cart-amount-box">
-                      <button className="cart-btn">
+                      <button
+                        onClick={() => dispatch(decreaseAmount(product.id))}
+                        className="cart-btn"
+                      >
                         <RemoveIcon />
                       </button>
                       <span>{product.amount}</span>
-                      <button className="cart-btn">
+                      <button
+                        onClick={() => dispatch(increaseAmount(product.id))}
+                        className="cart-btn"
+                      >
                         <AddIcon />
                       </button>
                     </Box>

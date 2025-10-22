@@ -10,6 +10,7 @@ const products = [
     inStock: true,
     preOrder: false,
     reviews: 34,
+    amount: 1,
   },
   {
     id: 2,

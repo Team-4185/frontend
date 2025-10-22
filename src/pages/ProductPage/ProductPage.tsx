@@ -1,5 +1,5 @@
 import { Box, Container } from '@mui/material';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import products from '../../shared/ui/ProductCard/products';
 import First from '/icons/productImg/BigImg.svg';
 import Second from '/icons/productImg/SmallFirst.svg';
@@ -17,15 +17,23 @@ import shop from '/icons/ProductInfoIcons/shop.svg';
 import delivery from '/icons/ProductInfoIcons/deliveryTrack.svg';
 import verify from '/icons/ProductInfoIcons/verify.svg';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../../app/store/CartSlice';
 
 export const ProductPage: React.FC = () => {
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const location = useLocation();
   const productFromState = location.state;
   const product = productFromState || products.find((p) => p.id === Number(id));
   const [img, setImg] = useState(First);
   const cpuName = product.name.split(' ');
-
+  const dispatch = useDispatch();
+  const addToCart = () => dispatch(addProduct(product));
+  const buyNow = () => {
+    addToCart();
+    navigate('/cart');
+  };
   return (
     <Container disableGutters maxWidth="xl" sx={{ padding: '20px' }}>
       <Box
@@ -338,6 +346,7 @@ export const ProductPage: React.FC = () => {
                 color: '#000',
                 fontFamily: 'Montserrat, sans-serif',
               }}
+              onClick={addToCart}
             >
               Add To Cart
             </button>
@@ -356,6 +365,7 @@ export const ProductPage: React.FC = () => {
                 color: '#fff',
                 fontFamily: 'Montserrat, sans-serif',
               }}
+              onClick={buyNow}
             >
               Buy Now
             </button>

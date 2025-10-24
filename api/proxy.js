@@ -1,6 +1,7 @@
 export default async function handler(req, res) {
   const target = 'https://your-backend.up.railway.app'; // ← твой бекенд
-
+  console.log('Incoming URL:', req.url);
+  console.log('Forwarding to:', target + req.url);
   try {
     const apiPath = req.url; // не обрезаем /api
     const url = target + apiPath;

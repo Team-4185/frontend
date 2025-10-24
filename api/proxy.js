@@ -1,11 +1,12 @@
 export default async function handler(req, res) {
-  const target = 'https://your-backend.up.railway.app'; // твой бекенд
+  const target = 'https://your-backend.up.railway.app'; // ← твой бекенд
 
   try {
-    const apiPath = req.url.replace(/^\/api/, '');
+    const apiPath = req.url; // не обрезаем /api
     const url = target + apiPath;
 
-    // Копируем заголовки, но удаляем Content-Length и Host
+    console.log('Proxy forwarding to:', url);
+
     const headers = { ...req.headers };
     delete headers['content-length'];
     delete headers['host'];
@@ -23,7 +24,6 @@ export default async function handler(req, res) {
 
     const response = await fetch(url, options);
 
-    // Пробрасываем статус и заголовки
     res.status(response.status);
     for (const [key, value] of response.headers.entries()) {
       res.setHeader(key, value);

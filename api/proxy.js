@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const target = 'https://your-backend.up.railway.app'; // ← твой бекенд
+  const target = 'https://phone-shop-production.up.railway.app'; // ← твой бекенд
   console.log('Incoming URL:', req.url);
   console.log('Forwarding to:', target + req.url);
   try {

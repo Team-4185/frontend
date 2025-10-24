@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const target = 'https://phone-shop-production.up.railway.app'; // ← адрес твоего бекенда
+  const target = 'http://phone-shop-production.up.railway.app'; // ← адрес твоего бекенда
 
   const url = target + req.url.replace(/^\/api/, '');
   const response = await fetch(url, {

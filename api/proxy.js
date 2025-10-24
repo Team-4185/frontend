@@ -5,7 +5,8 @@ export default async function handler(req, res) {
   try {
     const apiPath = req.url; // не обрезаем /api
     const url = target + apiPath;
-
+    console.log('Incoming URL:', req.url);
+    console.log('Forwarding to:', target + req.url);
     console.log('Proxy forwarding to:', url);
 
     const headers = { ...req.headers };

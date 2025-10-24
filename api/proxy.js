@@ -1,38 +1,43 @@
+export const config = {
+  api: {
+    bodyParser: false, // важно — отключаем встроенный парсер Vercel
+  },
+};
+
 export default async function handler(req, res) {
-  const target = 'https://phone-shop-production.up.railway.app'; // ← твой бекенд
-  console.log('Incoming URL:', req.url);
-  console.log('Forwarding to:', target + req.url);
+  const target = 'https://phone-shop-production.up.railway.app';
+
   try {
-    const apiPath = req.url; // не обрезаем /api
+    const apiPath = req.url; // оставляем /api/auth/register
     const url = target + apiPath;
-    console.log('Incoming URL:', req.url);
-    console.log('Forwarding to:', target + req.url);
-    console.log('Proxy forwarding to:', url);
 
+    console.log('Forwarding to:', url);
+
+    // Собираем тело запроса вручную
+    const chunks = [];
+    for await (const chunk of req) chunks.push(chunk);
+    const body = Buffer.concat(chunks);
+
+    // Убираем потенциально конфликтные заголовки
     const headers = { ...req.headers };
-    delete headers['content-length'];
     delete headers['host'];
+    delete headers['content-length'];
 
-    const options = {
+    // Делаем реальный запрос на бекенд
+    const response = await fetch(url, {
       method: req.method,
       headers,
-    };
+      body: req.method === 'GET' || req.method === 'HEAD' ? undefined : body,
+    });
 
-    if (req.method !== 'GET' && req.method !== 'HEAD') {
-      const chunks = [];
-      for await (const chunk of req) chunks.push(chunk);
-      options.body = Buffer.concat(chunks);
-    }
-
-    const response = await fetch(url, options);
-
+    // Пробрасываем ответ клиенту
     res.status(response.status);
     for (const [key, value] of response.headers.entries()) {
       res.setHeader(key, value);
     }
 
-    const data = await response.arrayBuffer();
-    res.send(Buffer.from(data));
+    const responseBuffer = await response.arrayBuffer();
+    res.send(Buffer.from(responseBuffer));
   } catch (error) {
     console.error('Proxy error:', error);
     res.status(500).json({ error: 'Internal proxy error', details: error.message });

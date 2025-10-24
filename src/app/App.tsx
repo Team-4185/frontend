@@ -1,17 +1,19 @@
-import './App.css';
-import { AuthPage } from '../pages/AuthPage/AuthPage';
-import { About } from '../pages/About/About';
-import { Home } from '../pages/Home/Home';
-import { Catalog } from '../pages/Catalog/Catalog';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { Footer } from '../shared/ui/Footer/Footer.tsx';
+import { ProtectedRoute } from './routes/ProtectedRoute';
+import { Header } from '../widgets/Header/Header';
+import { AuthPage } from '../pages/AuthPage/AuthPage';
+import { Home } from '../pages/Home/Home';
+import { Cart } from '../pages/Cart/Cart';
+import { Payment } from '../pages/Payment/Payment';
 import { Delivery } from '../pages/Delivery/Delivery.tsx';
-import { Payment } from '../pages/Payment/Payment.tsx';
-import { Cart } from '../pages/Cart/Cart.tsx';
-import { Header } from '../widgets/Header/Header.tsx';
+import { Catalog } from '../pages/Catalog/Catalog.tsx';
+import { About } from '../pages/About/About.tsx';
 import { ProductPage } from '../pages/ProductPage/ProductPage.tsx';
+import { Footer } from '../shared/ui/Footer/Footer.tsx';
 import { useSelector } from 'react-redux';
-import type { RootState } from './store/index.ts';
+import type { RootState } from './store';
+import { UserProfile } from '../pages/UserProfile/UserProfile.tsx';
+import './App.css';
 
 const App = () => {
   const location = useLocation();
@@ -36,12 +38,15 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<AuthPage />} />
-          <Route path="/catalog" element={<Catalog />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/delivery" element={<Delivery />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/login" element={<AuthPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/userProfile" element={<UserProfile />} />
+          </Route>
+
+          <Route path="/catalog" element={<Catalog />} />
+          <Route path="/about" element={<About />} />
           <Route path="/product/:id" element={<ProductPage />} />
         </Routes>
       </main>

@@ -81,7 +81,6 @@ export const Navigation: React.FC<NavigationProps> = ({ page, orderLength, handl
                     fontSize: '18px',
                     textDecoration: 'none',
                     color: 'inherit',
-                    padding: '10px',
                     textAlign: 'center',
                   }}
                 >

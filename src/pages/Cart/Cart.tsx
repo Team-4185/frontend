@@ -41,17 +41,9 @@ export const Cart: React.FC = () => {
               {products.map((product, idx) => (
                 <div key={product.id}>
                   {idx === 0 ? null : <Divider sx={{ mt: '22px', mb: '20px' }} />}
-
                   <Box className="cart-product">
                     <Box>
                       <img className="cart-product-img" src={greyBox} alt={product.name} />
-                      <Box
-                        onClick={() => dispatch(removeProduct(product.id))}
-                        className="cart-product_delete"
-                      >
-                        <img src={TrashIcon} alt="trash" />
-                        <span>Delete</span>
-                      </Box>
                     </Box>
                     <Box className="cart-product-info">
                       <span className="cart-product-name">{product.name}</span>
@@ -76,7 +68,13 @@ export const Cart: React.FC = () => {
 
                     <Box className="cart-subtotal">€ {product.price}</Box>
                   </Box>
-
+                  <Box
+                    onClick={() => dispatch(removeProduct(product.id))}
+                    className="cart-product_delete"
+                  >
+                    <img src={TrashIcon} alt="trash" />
+                    <span>Delete</span>
+                  </Box>
                   {idx === products.length - 1 ? <Divider sx={{ mt: '22px' }} /> : null}
                 </div>
               ))}

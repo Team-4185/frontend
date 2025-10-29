@@ -3,6 +3,8 @@ import { ProductCard } from '../../shared/ui/ProductCard/ProductCard';
 import { useNavigate } from 'react-router-dom';
 import fire from '/icons/fire.svg';
 import products from '../../shared/ui/ProductCard/products';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../../app/store/CartSlice';
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -12,7 +14,14 @@ export const Home = () => {
     { id: 3, name: 'Xiaomi', icon: '/icons/Brands/Xiaomi.svg', descr: '14T Pro' },
     { id: 4, name: 'Google', icon: '/icons/Brands/Google.svg', descr: 'Pixel 8 Pro' },
   ];
-
+  const IPhone17 = products[0];
+  const dispatch = useDispatch();
+  const addPhone = () => {
+    dispatch(
+      addProduct({ id: IPhone17.id, name: IPhone17.name, price: IPhone17.price, amount: 1 })
+    );
+    navigate('/cart');
+  };
   return (
     <>
       <Container disableGutters maxWidth="xl" sx={{ padding: '30px' }}>
@@ -67,6 +76,7 @@ export const Home = () => {
                 cursor: 'pointer',
                 height: '60px',
               }}
+              onClick={() => addPhone()}
             >
               Buy Now
             </button>

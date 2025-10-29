@@ -2,10 +2,16 @@ import { Box } from '@mui/material';
 import GraySquare from '/icons/GraySquare.svg';
 import Currency from '/icons/currency.svg';
 import WhishlistIcon from '/icons/WhishlistIcon.svg';
+import WishListWhole from '/icons/wishListWhole.svg';
 import Cart from '/icons/AddToCart.svg';
 import './ProductCard.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../../../app/store/CartSlice.ts';
+import {
+  addProductToWishList,
+  removeProductFromWishList,
+} from '../../../app/store/WishListSlice.ts';
+import type { RootState } from '../../../app/store/index.ts';
 
 type ProductCardProps = {
   id: number;
@@ -16,7 +22,7 @@ type ProductCardProps = {
   hit: boolean | undefined;
   newProduct: boolean | undefined;
   onClick?: () => void;
-  
+  home?: boolean;
 };
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -27,12 +33,23 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   sale,
   hit,
   newProduct,
+  home,
   onClick,
 }) => {
+  const wishList = useSelector((state: RootState) => state.wishList.wishList);
+  console.log(wishList);
   const dispatch = useDispatch();
-  const addToCart = () => dispatch(addProduct({ id, name, price, amount:1, }));
+  const addToCart = () => dispatch(addProduct({ id, name, price, amount: 1 }));
+
+  const toogleWishList = () => {
+    if (wishList.some((item) => item.id === id)) {
+      dispatch(removeProductFromWishList(id));
+    } else {
+      dispatch(addProductToWishList({ id, name, price, amount: 1 }));
+    }
+  };
   return (
-    <Box className="product-card" onClick={onClick}>
+    <Box className={home ? 'product-card-home' : 'product-card'} onClick={onClick}>
       {sale || hit || newProduct ? (
         <span
           style={{
@@ -40,8 +57,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             padding: '8px',
             background: '#fff',
             position: 'absolute',
-            top: '16px',
-            left: '16px',
+            top: '40px',
+            left: '30px',
             fontWeight: '500',
             fontSize: '15px',
             color: '#000',
@@ -50,15 +67,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {sale ? 'Sale' : hit ? 'Hit' : newProduct ? 'New' : null}
         </span>
       ) : null}
-      <img className="product-card__image" src={image ? image : GraySquare} alt="Product image" />
+      <img
+        className={home ? 'product-card__image-home' : 'product-card__image'}
+        src={image ? image : GraySquare}
+        alt="Product image"
+      />
 
       <Box className="product-card__info">
-        <span className="product-card__name">{name}</span>
-        <Box className="product-card__price">
+        <span className={home ? 'product-card__name-home' : 'product-card__name'}>{name}</span>
+        <Box className={home ? 'product-card__price-home' : 'product-card__price'}>
           <img src={Currency} alt="currency icon" />
           <span>{price}</span>
         </Box>
-        <Box className="product-card__actions">
+        <Box className={home ? 'product-card__actions-home' : 'product-card__actions'}>
           <Box
             onClick={(e) => {
               e.stopPropagation();
@@ -69,7 +90,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <span className="product-card__add-to-cart-text">Add to Cart</span>
             <img src={Cart} alt="Cart icon" />
           </Box>
-          <img className="product-card__wishlist" src={WhishlistIcon} alt="whishlist icon" />
+          <img
+            className={home ? 'product-card__wishlist-home' : 'product-card__wishlist'}
+            src={wishList.some((item) => item.id === id) ? WishListWhole : WhishlistIcon}
+            alt="whishlist icon"
+            onClick={(e) => {
+              e.stopPropagation();
+              toogleWishList();
+            }}
+          />
         </Box>
       </Box>
     </Box>

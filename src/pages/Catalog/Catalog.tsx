@@ -289,6 +289,7 @@ export const Catalog = () => {
           <Box className="catalog-products">
             {currentItems.map((product) => (
               <ProductCard
+                home
                 key={product.id}
                 id={product.id}
                 image={product.img}

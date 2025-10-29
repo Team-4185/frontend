@@ -77,23 +77,26 @@
     height: 29px;
 }
 
-.navigation-auth a, .navigation-pages a {
+.navigation-auth a,
+.navigation-pages a {
     font-size: 16px;
     font-weight: 600;
     height: 39px;
     color: #302f2f;
     text-transform: uppercase;
-    padding: 8px;
     text-decoration: none;
     border-radius: 0;
     background: none;
     transition: 0.3s;
     cursor: pointer;
+    text-align: center;
 }
 
-.navigation-auth a.clicked, .navigation-pages a.active {
+.navigation-auth a.clicked,
+.navigation-pages a.active {
     border-radius: 39px;
     background: rgba(174, 165, 165, 0.37);
+
 }
 
 .breadcrumbs-container {

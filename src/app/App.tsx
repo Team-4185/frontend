@@ -10,6 +10,7 @@ import { Catalog } from '../pages/Catalog/Catalog.tsx';
 import { About } from '../pages/About/About.tsx';
 import { ProductPage } from '../pages/ProductPage/ProductPage.tsx';
 import { Footer } from '../shared/ui/Footer/Footer.tsx';
+import { ScrollToTop } from '../shared/utils/ScrollToTop.tsx';
 import { useSelector } from 'react-redux';
 import type { RootState } from './store';
 import { UserProfile } from '../pages/UserProfile/UserProfile.tsx';
@@ -27,6 +28,7 @@ const App = () => {
     '/payment': 'Payment',
     '/catalog': 'Catalog',
     '/product/:id': 'ProductPage',
+    '/': 'Home',
   };
 
   const page = pageMap[currentPath]; // undefined for other pages
@@ -35,6 +37,7 @@ const App = () => {
     <div className="app-container">
       <Header page={page} orderLength={cartLength} product={productName} />
       <main className="content">
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<AuthPage />} />
@@ -44,7 +47,6 @@ const App = () => {
           <Route element={<ProtectedRoute />}>
             <Route path="/userProfile" element={<UserProfile />} />
           </Route>
-
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/about" element={<About />} />
           <Route path="/product/:id" element={<ProductPage />} />

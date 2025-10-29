@@ -37,7 +37,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onClick,
 }) => {
   const wishList = useSelector((state: RootState) => state.wishList.wishList);
-  console.log(wishList);
   const dispatch = useDispatch();
   const addToCart = () => dispatch(addProduct({ id, name, price, amount: 1 }));
 

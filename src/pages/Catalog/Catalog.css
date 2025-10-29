@@ -136,7 +136,7 @@
 }
 
 .pagination {
-    width: 290px;
+    width: max-content;
     display: flex;
     align-items: center;
     gap: 17px;
@@ -180,6 +180,19 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 8px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.pagination-prev {
+    width: 33px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 8px;
     background: #fff;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);

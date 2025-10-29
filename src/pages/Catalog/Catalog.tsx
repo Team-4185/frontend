@@ -305,9 +305,11 @@ export const Catalog = () => {
 
           {totalPages > 0 && (
             <Box className="pagination">
-              <Box className="pagination-next" onClick={handlePrevPage}>
-                <img src={SmallArrowLeft} alt="Arrow Right" />
-              </Box>
+              {totalPages > 1 && (
+                <Box className="pagination-prev" onClick={handlePrevPage}>
+                  <img src={SmallArrowLeft} alt="Arrow Right" />
+                </Box>
+              )}
               <Box className="pagination-numbers">
                 {Array.from({ length: totalPages }, (_: unknown, i: number) => (
                   <span
@@ -319,9 +321,11 @@ export const Catalog = () => {
                   </span>
                 ))}
               </Box>
-              <Box className="pagination-next" onClick={handleNextPage}>
-                Next <img src={SmallArrowRigth} alt="Arrow Right" />
-              </Box>
+              {totalPages > 1 && (
+                <Box className="pagination-next" onClick={handleNextPage}>
+                  Next <img src={SmallArrowRigth} alt="Arrow Right" />
+                </Box>
+              )}
             </Box>
           )}
         </Box>

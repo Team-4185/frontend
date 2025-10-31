@@ -20,7 +20,7 @@ This is a practice project of an **online phone store** built with **React**, **
 ## 🚀 How to Run
 1. Clone the repository:  
 ```bash
-git clone <repository-link>
+git clone https://github.com/Team-4185/frontend
 ```
 2.Install dependencies:  
 ```bash

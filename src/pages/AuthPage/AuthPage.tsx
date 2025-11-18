@@ -93,8 +93,7 @@ export const AuthPage = () => {
     try {
       await login(loginForm);
       navigate('/userProfile', { replace: true });
-    } catch {
-    }
+    } catch {}
   };
 
   const onRegister = async () => {
@@ -106,8 +105,7 @@ export const AuthPage = () => {
         passwordConfirmation: regForm.passwordConfirmation,
       });
       navigate('/userProfile', { replace: true });
-    } catch {
-    }
+    } catch {}
   };
 
   const loginDisabled = loginLoading || loginIssues.length > 0;
@@ -216,9 +214,7 @@ export const AuthPage = () => {
                           }}
                         />
                         {regErrors.passwordConfirmation && (
-                          <span style={{ color: 'crimson' }}>
-                            {regErrors.passwordConfirmation}
-                          </span>
+                          <span style={{ color: 'crimson' }}>{regErrors.passwordConfirmation}</span>
                         )}
                       </Box>
                       <Box

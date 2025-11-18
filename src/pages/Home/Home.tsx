@@ -22,6 +22,7 @@ export const Home = () => {
     );
     navigate('/cart');
   };
+
   return (
     <>
       <Container disableGutters maxWidth="xl" sx={{ padding: '30px' }}>

@@ -4,8 +4,8 @@ import { SingleFlight } from '../lib/promiseQueue';
 import type { AuthResponse, AuthRequestRefresh } from '../types/auth';
 
 const api: AxiosInstance = axios.create({
-  baseURL: '/api',
-  withCredentials: false, // set true only if you actually use cookies
+  baseURL: 'https://gadget-room.up.railway.app',
+  withCredentials: false, 
 });
 
 let accessToken: string | null = tokenStorage.get().accessToken;

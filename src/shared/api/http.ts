@@ -5,7 +5,7 @@ import type { AuthResponse, AuthRequestRefresh } from '../types/auth';
 
 const api: AxiosInstance = axios.create({
   baseURL: 'https://gadget-room.up.railway.app',
-  withCredentials: false, 
+  withCredentials: false,
 });
 
 let accessToken: string | null = tokenStorage.get().accessToken;

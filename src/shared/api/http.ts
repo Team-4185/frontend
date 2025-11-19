@@ -4,7 +4,7 @@ import { SingleFlight } from '../lib/promiseQueue';
 import type { AuthResponse, AuthRequestRefresh } from '../types/auth';
 
 const api: AxiosInstance = axios.create({
-  baseURL: 'https://gadget-room.up.railway.app',
+  baseURL: 'https://gadget-room.up.railway.app/api',
   withCredentials: false,
 });
 

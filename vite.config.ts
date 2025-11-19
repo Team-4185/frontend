@@ -9,12 +9,11 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     server: {
       proxy: {
-        // все запросы на /api будут перенаправляться на target
         '/api': {
           target,
           changeOrigin: true,
           secure: false,
-          rewrite: (path) => path.replace(/^\/api/, ''), // если нужно убрать префикс
+          // rewrite: (path) => path.replace(/^\/api/, ''),
         },
       },
     },
